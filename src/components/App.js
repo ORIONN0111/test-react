@@ -1,24 +1,15 @@
 // import logo from './logo.svg';
 import styles from '../App.css';
-import pic from "../Images/Image.png";
-import { type } from '@testing-library/user-event/dist/type';
+import pic from "../Images/image.png";
+// import { type } from '@testing-library/user-event/dist/type';
 import { useForm, Controller } from 'react-hook-form';
 // import Map from "./Map";
 import data from "../data.json";
 import { useState } from 'react';
-import { DevTool } from '@hookform/devtools';
+// import { DevTool } from '@hookform/devtools';
 import {
-  Grid,
-  Button,
-  Box,
   TextField,
   Autocomplete,
-  Typography,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
 } from '@mui/material';
 var sendId = 0;
 
