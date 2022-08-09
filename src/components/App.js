@@ -11,9 +11,16 @@ import {
   TextField,
   Autocomplete,
 } from '@mui/material';
+import LeaderLine from "leader-line-new";
 var sendId = 0;
 
 function App() {
+
+  // let link = [];
+  let link = [];
+  const initialLinks: LeaderLine[] = [];
+  const [links, setLinks] = useState(initialLinks);
+
   const [count, setNum] = useState(0);
   const { control, handleSubmit, setValue, getValues } = useForm({
     mode: 'onChange',
@@ -24,17 +31,29 @@ function App() {
 
   const handleClickOpen = () => {
     // setOpen(true);
-    console.log('handleC');
+    // console.log('handleC');
   };
   const handleClose = () => {
     // setOpen(false);
-    console.log('handleClo');
+    // console.log('handleClo');
   };
   const handleChange = (e) => {
     // console.log(e.target.id);
     sendId = e.target.id;
     const new_count = e.target.id;
-    setNum(new_count)
+    // gvu
+    if (links.length > 0){
+      links.filter(l => {
+        l.remove();
+      })
+    }
+    link.push(new LeaderLine(document.getElementById("3"),
+                   document.getElementById(String(new_count-1)),
+                   {dash: {animation: true}}));
+    setLinks(link);
+    // lll
+
+    setNum(new_count);
     // console.log(setNum);
   };
 
@@ -62,13 +81,15 @@ function App() {
             key={list}
             className='base-place'
             style={{left:w,top:h,backgroundColor:'red'}}
+            id={String(i)}
           ></div>)
         }else{
-        // list.push(<div
-        //   key={list}
-        //   className='base-place'
-        //   style={{left:w,top:h}}
-        // ></div>)
+        list.push(<div
+          key={list}
+          className='base-place'
+          style={{left:w,top:h,backgroundColor:'green'}}
+          id={String(i)}
+        ></div>)
         }
       }
       return list
