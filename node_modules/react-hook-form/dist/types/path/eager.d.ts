@@ -1,11 +1,11 @@
 import { FieldValues } from '../fields';
-import { Primitive } from '../utils';
+import { BrowserNativeObject, Primitive } from '../utils';
 import { ArrayKey, IsTuple, TupleKeys } from './common';
 /**
  * Helper type for recursively constructing paths through a type.
  * See {@link Path}
  */
-declare type PathImpl<K extends string | number, V> = V extends Primitive ? `${K}` : `${K}` | `${K}.${Path<V>}`;
+declare type PathImpl<K extends string | number, V> = V extends Primitive | BrowserNativeObject ? `${K}` : `${K}` | `${K}.${Path<V>}`;
 /**
  * Type which eagerly collects all paths through a type
  * @typeParam T - type which should be introspected
@@ -27,7 +27,7 @@ export declare type FieldPath<TFieldValues extends FieldValues> = Path<TFieldVal
  * Helper type for recursively constructing paths through a type.
  * See {@link ArrayPath}
  */
-declare type ArrayPathImpl<K extends string | number, V> = V extends Primitive ? never : V extends ReadonlyArray<infer U> ? U extends Primitive ? never : `${K}` | `${K}.${ArrayPath<V>}` : `${K}.${ArrayPath<V>}`;
+declare type ArrayPathImpl<K extends string | number, V> = V extends Primitive | BrowserNativeObject ? never : V extends ReadonlyArray<infer U> ? U extends Primitive | BrowserNativeObject ? never : `${K}` | `${K}.${ArrayPath<V>}` : `${K}.${ArrayPath<V>}`;
 /**
  * Type which eagerly collects all paths through a type which point to an array
  * type.
@@ -78,5 +78,18 @@ export declare type FieldArrayPathValue<TFieldValues extends FieldValues, TField
 export declare type FieldPathValues<TFieldValues extends FieldValues, TPath extends FieldPath<TFieldValues>[] | readonly FieldPath<TFieldValues>[]> = {} & {
     [K in keyof TPath]: FieldPathValue<TFieldValues, TPath[K] & FieldPath<TFieldValues>>;
 };
+/**
+ * Type which eagerly collects all paths through a fieldType that matches a give type
+ * @typeParam TFieldValues - field values which are indexed by the paths
+ * @typeParam TValue       - the value you want to match into each type
+ * @example
+ * ```typescript
+ * FieldPathByValue<{foo: {bar: number}, baz: number, bar: string}, number>
+ *   = 'foo.bar' | 'baz'
+ * ```
+ */
+export declare type FieldPathByValue<TFieldValues extends FieldValues, TValue> = {
+    [Key in FieldPath<TFieldValues>]: FieldPathValue<TFieldValues, Key> extends TValue ? Key : never;
+}[FieldPath<TFieldValues>];
 export {};
 //# sourceMappingURL=eager.d.ts.map

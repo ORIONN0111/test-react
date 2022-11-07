@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html,
+  body,
+  #root {
+    /* width: 100vw;
+    height: 100vh; */
+    display: flex;
+  }
+  Canvas{
+    width: 100vw;
+    height: 85vh;
+    background: black;
+  }
+  .form{
+    width: 100vw;
+    height: 10vh;
+    position:absolute;
+    bottom: 5vh;
+  }
+
+  
